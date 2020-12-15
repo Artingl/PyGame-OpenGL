@@ -18,10 +18,12 @@ def mouseMotion(dx, dy):
 
 def updatePosition():
     global px, py, pz, rot
+    spd = MSPEED * FPS / 1000
+
     keys = pg.key.get_pressed()
 
     rotY = rot[1] / 180 * math.pi
-    dx, dz = MSPEED * math.sin(rotY), MSPEED * math.cos(rotY)
+    dx, dz = spd * math.sin(rotY), spd * math.cos(rotY)
     DX, DY, DZ = 0, 0, 0
 
     if keys[pg.K_w]:
@@ -37,9 +39,9 @@ def updatePosition():
         DX += dz
         DZ += dx
     if keys[pg.K_LSHIFT]:
-        DY -= MSPEED
+        DY -= spd
     if keys[pg.K_SPACE]:
-        DY += MSPEED
+        DY += spd
 
     px += DX
     py += DY
@@ -51,44 +53,44 @@ def updatePosition():
 
 
 def drawCube(x, y, z):
-    glColor3f(0.0, 1.0, 0.0)
-    glVertex3f(x + 1.0, y + 1.0, z + -1.0)
-    glVertex3f(x + -1.0, y + 1.0, z + -1.0)
-    glVertex3f(x + -1.0, y + 1.0, z + 1.0)
+    glColor3f(0.2, 1.0, 0.2)
+    glVertex3f(x + 1.0, y + 1.0, z + 0.0)
+    glVertex3f(x + 0.0, y + 1.0, z + 0.0)
+    glVertex3f(x + 0.0, y + 1.0, z + 1.0)
     glVertex3f(x + 1.0, y + 1.0, z + 1.0)
 
-    glColor3f(1.0, 0.5, 0.0)
-    glVertex3f(x + 1.0, y + -1.0, z + 1.0)
-    glVertex3f(x + -1.0, y + -1.0, z + 1.0)
-    glVertex3f(x + -1.0, y + -1.0, z + -1.0)
-    glVertex3f(x + 1.0, y + -1.0, z + -1.0)
+    glColor3f(1.0, 0.2, 0.2)
+    glVertex3f(x + 1.0, y + 0.0, z + 1.0)
+    glVertex3f(x + 0.0, y + 0.0, z + 1.0)
+    glVertex3f(x + 0.0, y + 0.0, z + 0.0)
+    glVertex3f(x + 1.0, y + 0.0, z + 0.0)
 
-    glColor3f(1.0, 0.0, 0.0)
+    glColor3f(0.2, 0.2, 1.0)
     glVertex3f(x + 1.0, y + 1.0, z + 1.0)
-    glVertex3f(x + -1.0, y + 1.0, z + 1.0)
-    glVertex3f(x + -1.0, y + -1.0, z + 1.0)
-    glVertex3f(x + 1.0, y + -1.0, z + 1.0)
+    glVertex3f(x + 0.0, y + 1.0, z + 1.0)
+    glVertex3f(x + 0.0, y + 0.0, z + 1.0)
+    glVertex3f(x + 1.0, y + 0.0, z + 1.0)
 
-    glColor3f(1.0, 1.0, 0.0)
-    glVertex3f(x + 1.0, y + -1.0, z + -1.0)
-    glVertex3f(x + -1.0, y + -1.0, z + -1.0)
-    glVertex3f(x + -1.0, y + 1.0, z + -1.0)
-    glVertex3f(x + 1.0, y + 1.0, z + -1.0)
+    glColor3f(1.0, 1.0, 0.2)
+    glVertex3f(x + 1.0, y + 0.0, z + 0.0)
+    glVertex3f(x + 0.0, y + 0.0, z + 0.0)
+    glVertex3f(x + 0.0, y + 1.0, z + 0.0)
+    glVertex3f(x + 1.0, y + 1.0, z + 0.0)
 
-    glColor3f(0.0, 0.0, 1.0)
-    glVertex3f(x + -1.0, y + 1.0, z + 1.0)
-    glVertex3f(x + -1.0, y + 1.0, z + -1.0)
-    glVertex3f(x + -1.0, y + -1.0, z + -1.0)
-    glVertex3f(x + -1.0, y + -1.0, z + 1.0)
+    glColor3f(0.2, 1.0, 1.0)
+    glVertex3f(x + 0.0, y + 1.0, z + 1.0)
+    glVertex3f(x + 0.0, y + 1.0, z + 0.0)
+    glVertex3f(x + 0.0, y + 0.0, z + 0.0)
+    glVertex3f(x + 0.0, y + 0.0, z + 1.0)
 
-    glColor3f(1.0, 0.0, 1.0)
-    glVertex3f(x + 1.0, y + 1.0, z + -1.0)
+    glColor3f(1.0, 1.0, 1.0)
+    glVertex3f(x + 1.0, y + 1.0, z + 0.0)
     glVertex3f(x + 1.0, y + 1.0, z + 1.0)
-    glVertex3f(x + 1.0, y + -1.0, z + 1.0)
-    glVertex3f(x + 1.0, y + -1.0, z + -1.0)
+    glVertex3f(x + 1.0, y + 0.0, z + 1.0)
+    glVertex3f(x + 1.0, y + 0.0, z + 0.0)
 
 
-WIDTH, HEIGHT, FPS, PAUSE, MSPEED = 800, 600, 100, False, 0.2
+WIDTH, HEIGHT, FPS, PAUSE, MSPEED = 1280, 720, 1000, False, 0.2
 px, py, pz, rot = 0, 0, 0, [0, 0]
 
 pg.init()
@@ -108,6 +110,7 @@ while True:
         if event.type == pg.KEYDOWN:
             if event.key == pg.K_ESCAPE:
                 PAUSE = not PAUSE
+    pg.mouse.set_visible(PAUSE)
     if PAUSE:
         continue
     mx, my = pg.mouse.get_pos()
@@ -120,12 +123,14 @@ while True:
     glPushMatrix()
     updatePosition()
     glBegin(GL_QUADS)
-    for i in range(10):
-        for j in range(10):
+    for i in range(20):
+        for j in range(20):
             drawCube(i, -2, j)
     glEnd()
     glPopMatrix()
 
     glFlush()
+
+    pg.display.set_caption(f"FPS: {clock.get_fps()}")
     pg.display.flip()
     clock.tick(FPS)
